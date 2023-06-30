@@ -1,0 +1,51 @@
+{
+  "name": "boilera",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "clean": "expo start -c",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-masked-view/masked-view": "0.2.8",
+    "@react-native-voice/voice": "^3.2.4",
+    "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/material-top-tabs": "^6.6.2",
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/stack": "^6.3.16",
+    "@rneui/base": "^4.0.0-rc.7",
+    "@rneui/themed": "^4.0.0-rc.7",
+    "@shopify/flash-list": "1.4.0",
+    "@shopify/restyle": "^2.4.2",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "expo": "~48.0.18",
+    "expo-dev-client": "~2.2.1",
+    "expo-font": "~11.1.1",
+    "expo-speech": "~11.1.1",
+    "expo-splash-screen": "~0.18.2",
+    "expo-status-bar": "~1.4.4",
+    "expo-system-ui": "~2.2.1",
+    "react": "18.2.0",
+    "react-native": "0.71.8",
+    "react-native-gesture-handler": "~2.9.0",
+    "react-native-mmkv": "^2.10.0",
+    "react-native-pager-view": "6.1.2",
+    "react-native-paper": "^5.8.0",
+    "react-native-reanimated": "~2.14.4",
+    "react-native-safe-area-context": "4.5.0",
+    "react-native-screens": "~3.20.0",
+    "react-native-tab-view": "^3.5.1",
+    "react-native-vector-icons": "^9.2.0",
+    "react-native-web": "~0.18.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.0.27",
+    "@types/react-native": "^0.72.1",
+    "typescript": "^4.9.4"
+  },
+  "private": true
+}
