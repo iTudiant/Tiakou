@@ -3,7 +3,7 @@ import { Button, Icon } from "@rneui/themed";
 import { useTheme } from "@shopify/restyle";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet } from "react-native";
-import { Box, Column, MainScreen, Row, Text } from "_shared";
+import { Box, Column, MainScreen, Row, Text, TouchableOpacity } from "_shared";
 import { Size, Theme } from "_theme";
 import { achatScreenNavigationType } from "../types";
 
@@ -15,12 +15,14 @@ export default function DetailScreen() {
   return (
     <MainScreen typeOfScreen="stack">
       <Row justifyContent="space-between" marginHorizontal="s">
-        <Icon
-          name="arrow-back-ios"
-          size={Size.ICON_SMALL}
-          color={colors.primary}
-          containerStyle={[styles.icon, { backgroundColor: colors.offWhite }]}
-        />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon
+            name="arrow-back-ios"
+            size={Size.ICON_SMALL}
+            color={colors.primary}
+            containerStyle={[styles.icon, { backgroundColor: colors.offWhite }]}
+          />
+        </TouchableOpacity>
         <Icon
           name="shopping-cart"
           size={Size.ICON_SMALL}
