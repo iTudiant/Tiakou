@@ -1,5 +1,5 @@
 {
-  "name": "boilera",
+  "name": "marikety",
   "version": "0.0.1",
   "scripts": {
     "start": "expo start --dev-client",

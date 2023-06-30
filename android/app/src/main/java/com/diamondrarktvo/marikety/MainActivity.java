@@ -1,4 +1,4 @@
-package com.diamondrarktvo.boilera;
+package com.diamondrarktvo.marikety;
 
 import android.os.Build;
 import android.os.Bundle;

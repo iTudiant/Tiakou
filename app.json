@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "boilera",
-    "slug": "boilera",
+    "name": "marikety",
+    "slug": "marikety",
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,14 +16,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.diamondrarktvo.boilera"
+      "bundleIdentifier": "com.diamondrarktvo.marikety"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.diamondrarktvo.boilera"
+      "package": "com.diamondrarktvo.marikety",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -39,7 +42,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "b9fd2a52-4666-408b-84c8-42959a610fa4"
+        "projectId": "683e8809-eab9-48f4-9be3-24856c3ee326"
       }
     },
     "owner": "diamondrarktvo"

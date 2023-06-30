@@ -1,4 +1,4 @@
-package com.diamondrarktvo.boilera;
+package com.diamondrarktvo.marikety;
 
 import android.app.Application;
 import android.content.res.Configuration;
