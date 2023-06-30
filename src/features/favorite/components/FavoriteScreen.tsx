@@ -12,7 +12,7 @@ export default function FavoriteScreen() {
       <TouchableOpacity
         style={{ display: "flex", flexDirection: "row" }}
         onPress={() => {
-          navigation.navigate("listing_screen");
+          navigation.navigate("details_screen");
         }}
       >
         <Icon name="favorite" size={24} color="red" raised />

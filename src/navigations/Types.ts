@@ -8,6 +8,7 @@ export interface StackNavigationConfig {
 export type StackParamList = {
   main_tabs: undefined;
   listing_screen: undefined;
+  details_screen: undefined;
 };
 
 export type TabParamList = {

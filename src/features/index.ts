@@ -6,10 +6,10 @@ import MessageScreen from "./inbox/components/MessageScreen";
 import NotificationScreen from "./inbox/components/NotificationScreen";
 import InboxScreen from "./inbox/components/InboxScreen";
 import AccountScreen from "./account/components/AccountScreen";
+import DetailScreen from "./detail/components/DetailScreen";
 
 //COMPONENTS REUSABLE
 import ListingScreen from "./listingScreen/components/ListingScreen";
-
 
 export {
   //SCREEN PRINCIPAL
@@ -22,4 +22,5 @@ export {
   AccountScreen,
   //COMPONENT REUSABLE
   ListingScreen,
+  DetailScreen,
 };
