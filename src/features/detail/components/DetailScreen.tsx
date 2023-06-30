@@ -1,13 +1,16 @@
+import { useNavigation } from "@react-navigation/native";
 import { Button, Icon } from "@rneui/themed";
 import { useTheme } from "@shopify/restyle";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet } from "react-native";
 import { Box, Column, MainScreen, Row, Text } from "_shared";
 import { Size, Theme } from "_theme";
+import { achatScreenNavigationType } from "../types";
 
 export default function DetailScreen() {
   const theme = useTheme<Theme>();
   const colors = theme.colors;
+  const navigation = useNavigation<achatScreenNavigationType>();
 
   return (
     <MainScreen typeOfScreen="stack">
@@ -104,6 +107,7 @@ export default function DetailScreen() {
               shadowRadius: 4.65,
               elevation: 6,
             }}
+            onPress={() => navigation.navigate("achat_screen")}
           >
             <Icon
               name="shopping-bag"

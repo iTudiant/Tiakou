@@ -12,7 +12,7 @@ import { theme, darkTheme } from "_theme";
 import TabNavigation from "./TabNavigation";
 
 //IMPORT SCREEN
-import { ListingScreen, DetailScreen } from "_features";
+import { ListingScreen, DetailScreen, AchatScreen } from "_features";
 import { useSelector } from "react-redux";
 import { RootState } from "_store";
 
@@ -32,6 +32,7 @@ const StackNavigation = () => {
           >
             <Stack.Screen name={"main_tabs"} component={TabNavigation} />
             <Stack.Screen name={"details_screen"} component={DetailScreen} />
+            <Stack.Screen name={"achat_screen"} component={AchatScreen} />
           </Stack.Group>
 
           <Stack.Group

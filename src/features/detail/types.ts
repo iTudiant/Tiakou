@@ -1,7 +1,7 @@
 import { StackParamList } from "src/navigations/Types";
 import { StackNavigationProp } from "@react-navigation/stack";
 
-export type listingScreenNavigationType = StackNavigationProp<
+export type achatScreenNavigationType = StackNavigationProp<
   StackParamList,
-  "details_screen"
+  "achat_screen"
 >;
