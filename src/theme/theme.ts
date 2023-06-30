@@ -4,7 +4,7 @@ import { Typography } from "./typography";
 
 //grenat : #b03043
 //black : #141414
-//
+//vert : #125b49
 
 //PALETTE
 const palette = {
@@ -19,7 +19,7 @@ const palette = {
   offWhite: "#DDD",
   black: "#141414",
   offBlack: "#252525",
-  blue: "#06668C",
+  green: "#125b49",
 };
 
 const theme = createTheme({
@@ -34,11 +34,12 @@ const theme = createTheme({
     secondary: palette.grey, //grey
     offWhite: palette.offWhite,
     buttonPrimaryBackground: palette.grenatPrimary,
-    buttonSecondaryBackground: palette.blue,
+    buttonSecondaryBackground: palette.green,
     cardPrimaryBackground: palette.grenatPrimary,
     cardLightBackground: palette.grenatLight,
     text: palette.black,
     textPrimaryColor: palette.grenatPrimary,
+    green: palette.green,
   },
   spacing: {
     none: "0%",

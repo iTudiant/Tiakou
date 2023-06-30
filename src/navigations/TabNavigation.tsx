@@ -36,15 +36,15 @@ const TABROUTES: TabRouteTypes[] = [
     name: "favorite_screen",
     component: FavoriteScreen,
     tabLabel: "Favoris",
-    icon: "favorite-border",
-  },
-  /*{
-    name: "publish_screen",
-    component: PublishScreen,
-    tabLabel: "Publier",
-    icon: "public",
+    icon: "favorite",
   },
   {
+    name: "publish_screen",
+    component: PublishScreen,
+    tabLabel: "Cart",
+    icon: "shopping-cart",
+  },
+  /*{
     name: "inbox_screen",
     component: InboxScreen,
     tabLabel: "Boite de réception",
@@ -54,7 +54,7 @@ const TABROUTES: TabRouteTypes[] = [
     name: "account_screen",
     component: AccountScreen,
     tabLabel: "Menu",
-    icon: "person-outline",
+    icon: "person",
   },
 ];
 

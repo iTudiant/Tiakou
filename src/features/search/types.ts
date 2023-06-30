@@ -1,5 +1,6 @@
 /*Slice*/
 
 export type SearchState = {
-    listGoodies: string
-}
+  categories: object[];
+  influencys: object[];
+};

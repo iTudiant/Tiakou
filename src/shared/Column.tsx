@@ -8,7 +8,7 @@ type RowProps = Omit<BoxProps, "flexDirection"> & {
 
 const Column: React.FC<RowProps> = ({ children, ...rest }) => {
   return (
-    <Box flexDirection={"column"} {...rest} alignItems={"flex-start"}>
+    <Box flexDirection={"column"} {...rest}>
       {children}
     </Box>
   );
