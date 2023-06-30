@@ -43,7 +43,7 @@ export default function AccountScreen() {
               marginBottom="m"
             >
               <Image
-                source={require("_images/logoASA.jpeg")}
+                source={require("_images/Tiakou_logo.png")}
                 style={{
                   width: Size.IMAGE_SMALL,
                   height: Size.IMAGE_SMALL,

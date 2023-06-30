@@ -13,7 +13,7 @@ export const AllMenu = ({ loggedOut }: Props) => {
     <>
       {/**Actions */}
       <Row marginVertical="s">
-        <Text variant="bigTitle">Actions</Text>
+        <Text variant="bigTitle">Paramètres</Text>
       </Row>
       <UnitItemSectionLink
         iconLeft="shopping-bag"
@@ -23,17 +23,6 @@ export const AllMenu = ({ loggedOut }: Props) => {
       <UnitItemSectionLink
         iconLeft="person-outline"
         label="Informations personnelles"
-        onPress={() => Alert.alert("Menu cliqué!")}
-      />
-
-      {/**Parametre */}
-      <Row marginTop="m">
-        <Text variant="bigTitle">Paramètre</Text>
-      </Row>
-
-      <UnitItemSectionLink
-        iconLeft="payment"
-        label="Payement"
         onPress={() => Alert.alert("Menu cliqué!")}
       />
 
