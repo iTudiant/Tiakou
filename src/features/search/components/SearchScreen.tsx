@@ -138,14 +138,6 @@ export default function SearchScreen() {
           numColumns={2}
         />
       </Box>
-
-      <FAB
-        visible={true}
-        onPress={() => SpeakText(true, "Bonjour")}
-        placement="right"
-        icon={{ name: "play-arrow", color: "white" }}
-        color={colors.primary}
-      />
     </MainScreen>
   );
 }
