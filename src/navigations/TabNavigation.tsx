@@ -38,7 +38,7 @@ const TABROUTES: TabRouteTypes[] = [
     tabLabel: "Favoris",
     icon: "favorite-border",
   },
-  {
+  /*{
     name: "publish_screen",
     component: PublishScreen,
     tabLabel: "Publier",
@@ -49,7 +49,7 @@ const TABROUTES: TabRouteTypes[] = [
     component: InboxScreen,
     tabLabel: "Boite de réception",
     icon: "chat-bubble-outline",
-  },
+  },*/
   {
     name: "account_screen",
     component: AccountScreen,

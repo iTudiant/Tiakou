@@ -14,6 +14,8 @@ import {
 import { Size, Theme } from "_theme";
 import { SpeakText } from "_utils";
 import { useSpeechToText } from "_hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "_store";
 
 export default function SearchScreen() {
   const theme = useTheme<Theme>();
@@ -21,6 +23,7 @@ export default function SearchScreen() {
   const { isStartRecord, textFromSpeech, startSpeechToText, stopSpeechToText } =
     useSpeechToText();
 
+  const valueSearch = useSelector((state: RootState) => state.search.listGoodies)
   return (
     <MainScreen typeOfScreen="tab">
       <TouchableOpacity onPress={() => Alert.alert("touché")}>
@@ -41,6 +44,7 @@ export default function SearchScreen() {
               onPress={stopSpeechToText}
             />
           ) : null}
+
           <Column flex={2} marginHorizontal="xs">
             <Text variant={"primaryBold"}>Destination</Text>
             <Text variant={"tertiary"}>
@@ -65,6 +69,9 @@ export default function SearchScreen() {
               Vous avez prononcé : {textFromSpeech}
             </Text>
           )}
+        </Row>
+        <Row>
+          <Text> goodies : {valueSearch}</Text>
         </Row>
       </TouchableOpacity>
       <FAB

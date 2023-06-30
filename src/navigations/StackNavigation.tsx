@@ -10,7 +10,7 @@ import { StackParamList } from "./Types";
 import TabNavigation from "./TabNavigation";
 
 //IMPORT SCREEN
-import { DetailBook } from "_features";
+import { ListingScreen } from "_features";
 
 const Stack = createStackNavigator<StackParamList>();
 
@@ -27,7 +27,7 @@ const StackNavigation = () => {
         <Stack.Group
           screenOptions={stackNavigationConfig.screenOptionsForDisplayedHeader}
         >
-          <Stack.Screen name={"details_book"} component={DetailBook} options={{title: "Details"}} />
+          <Stack.Screen name={"listing_screen"} component={ListingScreen} options={{title: "Details"}} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

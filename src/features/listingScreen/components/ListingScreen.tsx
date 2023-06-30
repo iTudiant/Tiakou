@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 
-export default function DetailBook() {
+export default function ListingScreen() {
   return (
     <View style={styles.container}>
       <Text>Detail de ce livre</Text>

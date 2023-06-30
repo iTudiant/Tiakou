@@ -16,13 +16,8 @@ export const AllMenu = ({ loggedOut }: Props) => {
         <Text variant="bigTitle">Actions</Text>
       </Row>
       <UnitItemSectionLink
-        iconLeft="campaign"
-        label="Mes annonces"
-        onPress={() => Alert.alert("Menu cliqué!")}
-      />
-      <UnitItemSectionLink
-        iconLeft="trending-up"
-        label="Transaction"
+        iconLeft="shopping-bag"
+        label="Mes achats"
         onPress={() => Alert.alert("Menu cliqué!")}
       />
       <UnitItemSectionLink
@@ -39,11 +34,6 @@ export const AllMenu = ({ loggedOut }: Props) => {
       <UnitItemSectionLink
         iconLeft="payment"
         label="Payement"
-        onPress={() => Alert.alert("Menu cliqué!")}
-      />
-      <UnitItemSectionLink
-        iconLeft="online-prediction"
-        label="Connection"
         onPress={() => Alert.alert("Menu cliqué!")}
       />
 

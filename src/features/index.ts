@@ -8,7 +8,11 @@ import InboxScreen from "./inbox/components/InboxScreen";
 import AccountScreen from "./account/components/AccountScreen";
 
 //COMPONENTS REUSABLE
-import DetailBook from "./book/components/DetailBook";
+import ListingScreen from "./listingScreen/components/ListingScreen";
+
+
+//slice
+import searchReducer from "./search/searchSlice";
 
 export {
   //SCREEN PRINCIPAL
@@ -20,5 +24,11 @@ export {
   MessageScreen,
   AccountScreen,
   //COMPONENT REUSABLE
-  DetailBook,
+  ListingScreen,
 };
+
+
+/*export slice*/
+export {
+  searchReducer
+}

@@ -1,20 +1,22 @@
 import "expo-dev-client";
-import { useState } from "react";
-import { ThemeProvider, useTheme } from "@shopify/restyle";
+import { ThemeProvider } from "@shopify/restyle";
 import "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StackNavigation } from "_navigations";
-import { theme, darkTheme } from "_theme";
+import { theme } from "_theme";
 import { StatusBar } from "react-native";
+import { store } from '_store'
+import { Provider } from 'react-redux'
 
 export default function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
+    <Provider store={store}>
       <SafeAreaProvider>
-        <StatusBar backgroundColor={theme.colors.primary} />
-        <StackNavigation />
+      <ThemeProvider theme={theme}>
+          <StatusBar backgroundColor={theme.colors.primary} />
+          <StackNavigation />
+      </ThemeProvider>
       </SafeAreaProvider>
-    </ThemeProvider>
+    </Provider>
   );
 }

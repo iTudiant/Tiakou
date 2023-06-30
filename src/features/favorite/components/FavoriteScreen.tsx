@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { detailScreenNavigationType } from "../types/navigationTypes";
+import { listingScreenNavigationType } from "../types/navigationTypes";
 import { Icon, MainScreen, Text, TouchableOpacity } from "_shared";
 
 export default function FavoriteScreen() {
-  const navigation = useNavigation<detailScreenNavigationType>();
+  const navigation = useNavigation<listingScreenNavigationType>();
 
   return (
     <MainScreen typeOfScreen="tab" titleTabScreen="Favoris">
@@ -12,7 +12,7 @@ export default function FavoriteScreen() {
       <TouchableOpacity
         style={{ display: "flex", flexDirection: "row" }}
         onPress={() => {
-          navigation.navigate("details_book");
+          navigation.navigate("listing_screen");
         }}
       >
         <Icon name="favorite" size={24} color="red" raised />

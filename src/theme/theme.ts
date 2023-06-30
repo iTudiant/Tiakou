@@ -1,7 +1,10 @@
 import { createTheme } from "@shopify/restyle";
 import { Size } from "./size";
 import { Typography } from "./typography";
+import { store } from "_store";
 
+
+const isDarkMode =  store.getState().functionnality.isDarkMode;
 //PALETTE
 const palette = {
   orangeLight: "#F8AC71",
@@ -18,7 +21,7 @@ const palette = {
   blue: "#06668C",
 };
 
-const theme = createTheme({
+const lightTheme = createTheme({
   colors: {
     mainBackground: palette.white,
     mainForeground: palette.black,
@@ -94,9 +97,9 @@ const theme = createTheme({
 });
 
 const darkTheme = createTheme({
-  ...theme,
+  ...lightTheme,
   colors: {
-    ...theme.colors,
+    ...lightTheme.colors,
     mainBackground: palette.black,
     mainForeground: palette.white,
     primary: palette.orangePrimary,
@@ -108,5 +111,7 @@ const darkTheme = createTheme({
   },
 });
 
-export type Theme = typeof theme;
+const theme = !isDarkMode ? lightTheme : darkTheme;
+
+export type Theme = typeof lightTheme;
 export { theme, darkTheme };
