@@ -2,18 +2,22 @@ import { createTheme } from "@shopify/restyle";
 import { Size } from "./size";
 import { Typography } from "./typography";
 
+//grenat : #b03043
+//black : #141414
+//
+
 //PALETTE
 const palette = {
-  orangeLight: "#F8AC71",
-  orangePrimary: "#FF8323",
-  orangeDark: "#C66316",
+  grenatLight: "#F8AC71",
+  grenatPrimary: "#b03043",
+  grenatDark: "#C66316",
 
   redBordeaux: "#9B0409",
 
   white: "#F0F2F3",
   grey: "#939597",
   offWhite: "#DDD",
-  black: "#0B0B0B",
+  black: "#141414",
   offBlack: "#252525",
   blue: "#06668C",
 };
@@ -22,19 +26,19 @@ const theme = createTheme({
   colors: {
     mainBackground: palette.white,
     mainForeground: palette.black,
-    primary: palette.orangePrimary,
-    orangeDark: palette.orangeDark,
+    primary: palette.grenatPrimary,
+    grenatDark: palette.grenatDark,
     error: palette.redBordeaux,
     white: palette.white,
     black: palette.black,
     secondary: palette.grey, //grey
     offWhite: palette.offWhite,
-    buttonPrimaryBackground: palette.orangePrimary,
+    buttonPrimaryBackground: palette.grenatPrimary,
     buttonSecondaryBackground: palette.blue,
-    cardPrimaryBackground: palette.orangePrimary,
-    cardLightBackground: palette.orangeLight,
+    cardPrimaryBackground: palette.grenatPrimary,
+    cardLightBackground: palette.grenatLight,
     text: palette.black,
-    textPrimaryColor: palette.orangePrimary,
+    textPrimaryColor: palette.grenatPrimary,
   },
   spacing: {
     none: "0%",
@@ -99,7 +103,7 @@ const darkTheme = createTheme({
     ...theme.colors,
     mainBackground: palette.black,
     mainForeground: palette.white,
-    primary: palette.orangePrimary,
+    primary: palette.grenatPrimary,
     secondary: palette.black, //grey
     error: palette.redBordeaux,
     white: palette.offWhite,
