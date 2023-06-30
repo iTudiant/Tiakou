@@ -1,3 +1,6 @@
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "../../navigations/Types";
+
 /*Slice*/
 
 export type SearchState = {
@@ -5,3 +8,8 @@ export type SearchState = {
   influencys: object[];
   products: object[];
 };
+
+export type detailsScreenNavigationType = StackNavigationProp<
+  StackParamList,
+  "details_screen"
+>;

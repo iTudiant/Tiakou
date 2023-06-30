@@ -1,6 +1,6 @@
 import { FAB } from "@rneui/themed";
 import { useTheme } from "@shopify/restyle";
-import { Alert, Pressable, StyleSheet, TextInput } from "react-native";
+import { Alert, Image, Pressable, StyleSheet, TextInput } from "react-native";
 import {
   Box,
   Button,
@@ -16,10 +16,11 @@ import { SpeakText } from "_utils";
 import { useSpeechToText } from "_hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "_store";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { UnitCategorie } from "./UnitCategorie";
 import { UnitInfluency } from "./UnitInfluency";
-import { UnitProduct } from "./UnitProduct";
+import { detailsScreenNavigationType } from "../types";
+import { useNavigation } from "@react-navigation/native";
 
 type PropsFIlter = {
   id: number;
@@ -44,6 +45,7 @@ export default function SearchScreen() {
   const { isStartRecord, textFromSpeech, startSpeechToText, stopSpeechToText } =
     useSpeechToText();
   const dispatch = useDispatch();
+  const navigation = useNavigation<detailsScreenNavigationType>();
 
   const categories = useSelector(
     (state: RootState) => state.search.categories,
@@ -56,6 +58,41 @@ export default function SearchScreen() {
   const products = useSelector(
     (state: RootState) => state.search.products,
   ) as PropsProduct[];
+
+  const UnitProduct: ListRenderItem<PropsProduct> = ({ item }) => {
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate("details_screen")}>
+        <Box
+          key={item.id}
+          style={{ width: 180 }}
+          marginVertical="m"
+          borderRadius="sm"
+          alignItems={"center"}
+          justifyContent="space-between"
+        >
+          <Image source={item.image} style={styles.image} />
+          <Box
+            style={{ marginTop: -30 }}
+            backgroundColor={"primary"}
+            padding="s"
+            borderWidth={3}
+            borderColor="white"
+            borderRadius="lg"
+          >
+            <Icon name="shopping-bag" color="white" size={Size.ICON_MEDIUM} />
+          </Box>
+          <Column alignItems="center" justifyContent="center">
+            <Text variant={"title"} color="black">
+              {item.nom}
+            </Text>
+            <Text variant={"title"} color="primary" fontWeight={"bold"}>
+              {item.prix}
+            </Text>
+          </Column>
+        </Box>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <MainScreen typeOfScreen="tab">
@@ -153,5 +190,10 @@ const styles = StyleSheet.create({
   icon: {
     borderRadius: 8,
     padding: "5%",
+  },
+  image: {
+    height: 170,
+    width: 170,
+    borderRadius: 16,
   },
 });
