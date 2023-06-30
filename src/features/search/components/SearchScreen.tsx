@@ -1,11 +1,10 @@
-import { FAB } from "@rneui/themed";
+import { FAB, Input } from "@rneui/themed";
 import { useTheme } from "@shopify/restyle";
 import { Alert, Pressable, StyleSheet } from "react-native";
 import {
   Button,
   Column,
   Icon,
-  Input,
   MainScreen,
   Row,
   Text,
@@ -15,32 +14,31 @@ import { Size, Theme } from "_theme";
 import { SpeakText } from "_utils";
 import { useSpeechToText } from "_hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, switchMode } from "_store";
-import { useState } from "react";
+import { RootState } from "_store";
 
 export default function SearchScreen() {
   const theme = useTheme<Theme>();
   const { colors, sizes } = theme;
   const { isStartRecord, textFromSpeech, startSpeechToText, stopSpeechToText } =
     useSpeechToText();
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); 
   const dispatch = useDispatch();
-
-  const changeMode = () => {
-    setIsDarkMode(!isDarkMode);
-    dispatch(switchMode());
-  }
 
   const valueSearch = useSelector((state: RootState) => state.search.listGoodies)
   return (
     <MainScreen typeOfScreen="tab">
       <TouchableOpacity onPress={() => Alert.alert("touché")}>
-        <Row alignItems="center" style={styles.card_shadow}>
+        <Row alignItems="flex-end">
+          <Input placeholder="Rechercher" containerStyle={[{
+            width: "80%",
+            backgroundColor: colors.offWhite,
+          }, styles.container_input]} />
+          
           {!isStartRecord ? (
             <Icon
               name="mic"
               size={Size.ICON_SMALL}
-              color={colors.primary}
+              containerStyle={[styles.icon, {backgroundColor: colors.primary}]}
+              color={colors.white}
               onPress={startSpeechToText}
             />
           ) : null}
@@ -48,28 +46,11 @@ export default function SearchScreen() {
             <Icon
               name="stop"
               size={Size.ICON_SMALL}
-              color={colors.primary}
+              containerStyle={[styles.icon, {backgroundColor: colors.primary}]}
+              color={colors.white}
               onPress={stopSpeechToText}
             />
           ) : null}
-
-          <Column flex={2} marginHorizontal="xs">
-            <Text variant={"primaryBold"}>Destination</Text>
-            <Text variant={"tertiary"}>
-              N'importe où * faite vos recherches
-            </Text>
-          </Column>
-          <Pressable
-            onPress={() => console.log("tay ohh")}
-            style={{
-              borderWidth: 1,
-              borderRadius: 20,
-              borderColor: colors.offWhite,
-              padding: 4,
-            }}
-          >
-            <Icon name="tune" size={Size.ICON_SMALL} color={colors.primary} />
-          </Pressable>
         </Row>
         <Row>
           {textFromSpeech && (
@@ -89,30 +70,17 @@ export default function SearchScreen() {
         icon={{ name: "play-arrow", color: "white" }}
         color={colors.primary}
       />
-      <FAB
-        visible={true}
-        onPress={() => changeMode()}
-        placement="left"
-        icon={{ name: isDarkMode ? "nightlight-round" : "wb-sunny", color: "white" }}
-        color={colors.primary}
-      />
     </MainScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  card_shadow: {
-    padding: "3%",
-    marginBottom: "4%",
-    borderRadius: 24,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 6,
-      height: 5,
-    },
-    shadowOpacity: 0.45,
-    shadowRadius: 4.65,
-    elevation: 8,
+  container_input: {
+    borderRadius: 16,
+    paddingHorizontal: '3%',
   },
+  icon: {
+    borderRadius: 8,
+    padding: "5%"
+  }
 });

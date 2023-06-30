@@ -1,5 +1,4 @@
 import "expo-dev-client";
-import { useState } from "react";
 import "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StackNavigation } from "_navigations";
