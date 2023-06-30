@@ -24,7 +24,7 @@ export const UnitProduct: ListRenderItem<PropsProduct> = ({
   return (
     <Box
       key={item.id}
-      style={{ width: 170 }}
+      style={{ width: 180 }}
       marginVertical="m"
       borderRadius="sm"
       alignItems={"center"}
