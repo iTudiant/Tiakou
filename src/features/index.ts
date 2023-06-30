@@ -11,9 +11,6 @@ import AccountScreen from "./account/components/AccountScreen";
 import ListingScreen from "./listingScreen/components/ListingScreen";
 
 
-//slice
-import searchReducer from "./search/searchSlice";
-
 export {
   //SCREEN PRINCIPAL
   FavoriteScreen,
@@ -26,9 +23,3 @@ export {
   //COMPONENT REUSABLE
   ListingScreen,
 };
-
-
-/*export slice*/
-export {
-  searchReducer
-}

@@ -14,14 +14,22 @@ import {
 import { Size, Theme } from "_theme";
 import { SpeakText } from "_utils";
 import { useSpeechToText } from "_hooks";
-import { useSelector } from "react-redux";
-import { RootState } from "_store";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, switchMode } from "_store";
+import { useState } from "react";
 
 export default function SearchScreen() {
   const theme = useTheme<Theme>();
   const { colors, sizes } = theme;
   const { isStartRecord, textFromSpeech, startSpeechToText, stopSpeechToText } =
     useSpeechToText();
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); 
+  const dispatch = useDispatch();
+
+  const changeMode = () => {
+    setIsDarkMode(!isDarkMode);
+    dispatch(switchMode());
+  }
 
   const valueSearch = useSelector((state: RootState) => state.search.listGoodies)
   return (
@@ -79,6 +87,13 @@ export default function SearchScreen() {
         onPress={() => SpeakText(true, "Bonjour")}
         placement="right"
         icon={{ name: "play-arrow", color: "white" }}
+        color={colors.primary}
+      />
+      <FAB
+        visible={true}
+        onPress={() => changeMode()}
+        placement="left"
+        icon={{ name: isDarkMode ? "nightlight-round" : "wb-sunny", color: "white" }}
         color={colors.primary}
       />
     </MainScreen>

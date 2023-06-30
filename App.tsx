@@ -1,5 +1,5 @@
 import "expo-dev-client";
-import { ThemeProvider } from "@shopify/restyle";
+import { useState } from "react";
 import "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StackNavigation } from "_navigations";
@@ -12,10 +12,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-      <ThemeProvider theme={theme}>
-          <StatusBar backgroundColor={theme.colors.primary} />
-          <StackNavigation />
-      </ThemeProvider>
+        <StatusBar backgroundColor={theme.colors.primary} />
+        <StackNavigation />
       </SafeAreaProvider>
     </Provider>
   );
