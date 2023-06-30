@@ -7,7 +7,7 @@ import { Size } from "_theme";
 
 type PropsInfluency = {
   id: number;
-  name: "string";
+  nom: "string";
   description: "string";
 };
 
@@ -27,8 +27,8 @@ export const UnitInfluency: ListRenderItem<PropsInfluency> = ({
       alignItems={"center"}
       justifyContent="center"
     >
-      <Text variant={"primary"} color="green" fontWeight={"bold"}>
-        {item.name}
+      <Text variant={"primary"} color="primary" fontWeight={"bold"}>
+        {item.nom}
       </Text>
     </Row>
   );

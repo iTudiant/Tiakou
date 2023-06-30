@@ -6,7 +6,7 @@ import { Size } from "_theme";
 
 type PropsCategorie = {
   id: number;
-  name: "string";
+  nom: "string";
   description: "string";
 };
 
@@ -27,8 +27,8 @@ export const UnitCategorie: ListRenderItem<PropsCategorie> = ({
       justifyContent="space-between"
     >
       <Icon name="shopping-cart" color="green" size={Size.ICON_SMALL} />
-      <Text variant={"primary"} color="green">
-        {item.name}
+      <Text variant={"primary"} color="black">
+        {item.nom}
       </Text>
     </Column>
   );

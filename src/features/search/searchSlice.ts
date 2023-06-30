@@ -6,25 +6,71 @@ const initialState: SearchState = {
   categories: [
     {
       id: 1,
-      name: "Cup",
+      nom: "Cup",
       description: "Test description ftsn",
     },
     {
       id: 2,
-      name: "T-Shirt",
+      nom: "T-Shirt",
       description: "Test description ftsn",
     },
   ],
   influencys: [
     {
       id: 1,
-      name: "Agrad",
+      nom: "Agrad",
       description: "Test description ftsn",
     },
     {
       id: 2,
-      name: "Skaiz",
+      nom: "Skaiz",
       description: "Test description ftsn",
+    },
+  ],
+  products: [
+    {
+      id: 1,
+      nom: "Mug",
+      description: "Mug jolie",
+      image: require("_images/mug.jpg"),
+      prix: 2000.0,
+      categorie: 1,
+      user: 2,
+      number: 12,
+      is_finished: false,
+    },
+    {
+      id: 2,
+      nom: "Pull",
+      description: "Pull jolie",
+      image: require("_images/pull.jpg"),
+      prix: 2000.0,
+      categorie: 1,
+      user: 2,
+      number: 12,
+      is_finished: false,
+    },
+    {
+      id: 3,
+      nom: "Pull black",
+      description: "Mug jolie",
+      image: require("_images/pull_black.jpg"),
+      prix: 400.0,
+      categorie: 1,
+      user: 2,
+      number: 12,
+      is_finished: false,
+    },
+    {
+      id: 4,
+      nom: "Mug spiderman",
+      description: "Pull jolie",
+      image: require("_images/pull.jpg"),
+      prix: 2000.0,
+      categorie: 1,
+      user: 2,
+      number: 12,
+      is_finished: false,
     },
   ],
 };
@@ -38,6 +84,9 @@ export const searchSlice = createSlice({
     },
     setInfluencys: (state, action: PayloadAction<object[]>) => {
       state.influencys = [...state.influencys, action.payload];
+    },
+    setProducts: (state, action: PayloadAction<object[]>) => {
+      state.products = [...state.products, action.payload];
     },
   },
 });

@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Icon, MainScreen, Text } from "_shared";
+import { Box, Icon, MainScreen, Text } from "_shared";
+import { FlashList } from "@shopify/flash-list";
 
 export default function PublishScreen() {
   //const navigation = useNavigation<>();
 
   return (
-    <MainScreen typeOfScreen="tab" titleTabScreen="Publication">
-      <Text variant="secondary">
-        Si vous voulez publier, alors c'est ici...{" "}
-      </Text>
+    <MainScreen typeOfScreen="tab" titleTabScreen="Panier">
+      <Box flex={1}>
+        <FlashList estimatedItemSize={60} data={} />
+      </Box>
     </MainScreen>
   );
 }

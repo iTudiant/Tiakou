@@ -19,11 +19,23 @@ import { RootState } from "_store";
 import { FlashList } from "@shopify/flash-list";
 import { UnitCategorie } from "./UnitCategorie";
 import { UnitInfluency } from "./UnitInfluency";
+import { UnitProduct } from "./UnitProduct";
 
 type PropsFIlter = {
   id: number;
-  name: "string";
+  nom: "string";
   description: "string";
+};
+
+type PropsProduct = {
+  id: number;
+  nom: "string";
+  description: "string";
+  image: string;
+  prix: number;
+  categorie: number;
+  user: number;
+  is_finished: boolean;
 };
 
 export default function SearchScreen() {
@@ -40,6 +52,10 @@ export default function SearchScreen() {
   const influencys = useSelector(
     (state: RootState) => state.search.influencys,
   ) as PropsFIlter[];
+
+  const products = useSelector(
+    (state: RootState) => state.search.products,
+  ) as PropsProduct[];
 
   return (
     <MainScreen typeOfScreen="tab">
@@ -93,7 +109,7 @@ export default function SearchScreen() {
       {/**Filter product */}
       <Box style={{ height: 100 }} marginBottom="s">
         <FlashList
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item, index) => item.id.toString()}
           estimatedItemSize={60}
           data={categories}
           renderItem={UnitCategorie}
@@ -102,13 +118,24 @@ export default function SearchScreen() {
       </Box>
 
       {/**Filter influenceur */}
-      <Box style={{ height: 50 }}>
+      <Box style={{ height: 50 }} marginBottom="s">
         <FlashList
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item, index) => item.id.toString()}
           estimatedItemSize={60}
           data={influencys}
           renderItem={UnitInfluency}
           horizontal={true}
+        />
+      </Box>
+
+      {/**Filter product */}
+      <Box style={{ flex: 1 }}>
+        <FlashList
+          keyExtractor={(item) => item.id.toString()}
+          estimatedItemSize={60}
+          data={products}
+          renderItem={UnitProduct}
+          numColumns={2}
         />
       </Box>
 
