@@ -91,6 +91,13 @@ export default function FavoriteScreen() {
           data={favorites}
           renderItem={UnitProduct}
           numColumns={2}
+          ListEmptyComponent={
+            <Box alignItems={"center"} justifyContent="center">
+              <Text variant="bigTitle" color={"primary"} fontWeight="bold">
+                Vous n'avez rien dans votre favoris
+              </Text>
+            </Box>
+          }
         />
       </Box>
     </MainScreen>
