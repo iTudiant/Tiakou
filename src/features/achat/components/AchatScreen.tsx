@@ -5,14 +5,30 @@ import { Image, StyleSheet } from "react-native";
 import { Box, Column, MainScreen, Row, Text, TouchableOpacity } from "_shared";
 import { Size, Theme } from "_theme";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastAndroid } from "react-native";
+import { useSelector } from "react-redux";
+import { RootState } from "_store";
+
+type PropsCart = {
+  id: number;
+  quantity: number;
+  prixUnity: number;
+};
 
 export default function AchatScreen() {
   const theme = useTheme<Theme>();
   const colors = theme.colors;
   const navigation = useNavigation();
   const [isPay, setIsPay] = useState(false);
+  const [resumeSummary, setResumeSummary] = useState({
+    prixTotal: 0,
+    date: "01/06/2023",
+  });
+
+  const carts = useSelector(
+    (state: RootState) => state.cart.carts,
+  ) as PropsCart[];
 
   const payMyCart = () => {
     setTimeout(() => {
@@ -23,6 +39,31 @@ export default function AchatScreen() {
       );
     }, 5000);
   };
+
+  const calculateTotalPrice = (cart: PropsCart[]) => {
+    if (!cart) {
+      return;
+    }
+    let prixTotal = 0;
+    let totalPerProduct = cart.map((item) => {
+      return item.quantity * item.prixUnity;
+    });
+    if (totalPerProduct.length > 0) {
+      prixTotal = totalPerProduct.reduce((acc, curr) => {
+        return acc + curr;
+      });
+    }
+
+    setResumeSummary((prevState) => {
+      return { date: "01/06/2023", prixTotal: prixTotal };
+    });
+
+    return prixTotal;
+  };
+
+  useEffect(() => {
+    calculateTotalPrice(carts);
+  }, [carts]);
 
   return (
     <MainScreen typeOfScreen="stack">
@@ -70,7 +111,7 @@ export default function AchatScreen() {
               Montant
             </Text>
             <Text variant="primaryBold" color="black">
-              50 000
+              {resumeSummary.prixTotal}
             </Text>
           </Row>
 
@@ -115,7 +156,7 @@ export default function AchatScreen() {
               Date
             </Text>
             <Text variant="primaryBold" color="black">
-              01/06/2023
+              {resumeSummary.date}
             </Text>
           </Row>
         </Box>
@@ -142,6 +183,9 @@ export default function AchatScreen() {
             onPress={() => {
               setIsPay(true);
               payMyCart();
+              setTimeout(() => {
+                setResumeSummary({ prixTotal: 0, date: "" });
+              }, 2000);
             }}
           />
         </Row>

@@ -16,6 +16,7 @@ import { Size, Theme } from "_theme";
 import { useCallback, useState } from "react";
 import { useTheme } from "@shopify/restyle";
 import { removeOneCart } from "../publishSlice";
+import { achatScreenNavigationType } from "../types";
 
 type PropsProduct = {
   id: number;
@@ -36,7 +37,7 @@ type PropsCart = {
 };
 
 export default function PublishScreen() {
-  //const navigation = useNavigation<>();
+  const navigation = useNavigation<achatScreenNavigationType>();
   const theme = useTheme<Theme>();
   const { colors, sizes } = theme;
   const dispatch = useDispatch();
@@ -226,7 +227,9 @@ export default function PublishScreen() {
                       },
                     ]}
                   >
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("achat_screen")}
+                    >
                       <Image
                         source={require("_images/mug.jpg")}
                         style={styles.image_payment}
