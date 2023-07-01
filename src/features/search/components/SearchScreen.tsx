@@ -56,6 +56,7 @@ type PropsInfluency = {
   id: number;
   nom: "string";
   description: "string";
+  choice: boolean;
 };
 
 type PropsCategorie = {
@@ -121,9 +122,18 @@ export default function SearchScreen() {
     }),
   );
 
-  const influencys = useSelector(
+  const influencysFormStore = useSelector(
     (state: RootState) => state.search.influencys,
   ) as PropsFIlter[];
+
+  const [influencys, setInfluencys] = useState(
+    influencysFormStore.map((inf) => {
+      return {
+        ...inf,
+        choice: false,
+      };
+    }),
+  );
 
   const favorites = useSelector(
     (state: RootState) => state.favorites.favorites,
@@ -141,6 +151,16 @@ export default function SearchScreen() {
       };
     }),
   );
+
+  const handleChooseInfluency = (idInfluency: number) => {
+    setInfluencys((prevList) =>
+      prevList.map((item) =>
+        item.id === idInfluency
+          ? { ...item, choice: !item.choice }
+          : { ...item, choice: false },
+      ),
+    );
+  };
 
   const handleChooseCategorie = (idCatg: number) => {
     setCategories((prevList) =>
@@ -277,20 +297,36 @@ export default function SearchScreen() {
 
   const UnitInfluency: ListRenderItem<PropsInfluency> = ({ item }) => {
     return (
-      <Row
-        backgroundColor="offWhite"
-        key={item.id}
-        style={{ height: 50, width: 100 }}
-        marginHorizontal="xs"
-        paddingVertical="l"
-        borderRadius="sm"
-        alignItems={"center"}
-        justifyContent="center"
+      <TouchableOpacity
+        onPress={() => {
+          if (item.choice) {
+            handleChooseInfluency(item.id);
+            setInflu(null);
+          } else {
+            handleChooseInfluency(item.id);
+            setInflu(item.id);
+          }
+        }}
       >
-        <Text variant={"primary"} color="primary" fontWeight={"bold"}>
-          {item.nom}
-        </Text>
-      </Row>
+        <Row
+          backgroundColor={item.choice ? "green" : "offWhite"}
+          key={item.id}
+          style={{ height: 50, width: 100 }}
+          marginHorizontal="xs"
+          paddingVertical="l"
+          borderRadius="sm"
+          alignItems={"center"}
+          justifyContent="center"
+        >
+          <Text
+            variant={"primary"}
+            color={item.choice ? "white" : "primary"}
+            fontWeight={"bold"}
+          >
+            {item.nom}
+          </Text>
+        </Row>
+      </TouchableOpacity>
     );
   };
 
