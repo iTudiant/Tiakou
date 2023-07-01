@@ -63,7 +63,11 @@ export default function FavoriteScreen() {
 
   const UnitProduct: ListRenderItem<productsFavorites> = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("details_screen")}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("details_screen", { idProduct: item.id })
+        }
+      >
         <Box
           key={item.id}
           style={{ width: 180 }}
@@ -95,7 +99,7 @@ export default function FavoriteScreen() {
             <Icon name="shopping-bag" color="white" size={Size.ICON_MEDIUM} />
           </Box>
           <Column alignItems="center" justifyContent="center">
-            <Text variant={"primary"} color="black">
+            <Text variant={"primary"} color="text">
               {item.nom}
             </Text>
             <Text variant={"title"} color="primary" fontWeight={"bold"}>

@@ -51,8 +51,12 @@ export default function AccountScreen() {
                 }}
               />
               <Column paddingHorizontal="s" flex={2}>
-                <Text variant="title">Dama</Text>
-                <Text variant="secondary">Afficher le profil</Text>
+                <Text variant="title" color="text">
+                  Dama
+                </Text>
+                <Text variant="secondary" color="text">
+                  Afficher le profil
+                </Text>
               </Column>
               <Icon
                 name="chevron-right"

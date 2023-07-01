@@ -75,7 +75,7 @@ export default function DetailScreen() {
       <Column>
         <Row alignItems="center" justifyContent="space-between">
           <Column>
-            <Text variant="title" fontWeight="bold">
+            <Text variant="title" fontWeight="bold" color="text">
               {productToViewDetail[0].nom}
             </Text>
             <Box
@@ -104,7 +104,7 @@ export default function DetailScreen() {
           />
         </Row>
         <ScrollView style={{ height: 200 }}>
-          <Text variant="primary" textAlign={"justify"}>
+          <Text variant="primary" textAlign={"justify"} color="text">
             {productToViewDetail[0].description}
           </Text>
         </ScrollView>
@@ -136,7 +136,9 @@ export default function DetailScreen() {
                 ]}
               />
             </TouchableOpacity>
-            <Text variant="bigTitle">{count}</Text>
+            <Text variant="bigTitle" color="text">
+              {count}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 if (count < productToViewDetail[0].number) {

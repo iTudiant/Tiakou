@@ -29,7 +29,9 @@ export const UnitItemSectionLink = ({ iconLeft, label, onPress }: Props) => {
       >
         <Icon name={iconLeft} size={Size.ICON_MEDIUM} color={colors.black} />
         <Column paddingHorizontal="s" flex={2}>
-          <Text variant="primary">{label}</Text>
+          <Text variant="primary" color="text">
+            {label}
+          </Text>
         </Column>
         <Icon
           name="chevron-right"

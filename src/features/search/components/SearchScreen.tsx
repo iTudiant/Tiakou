@@ -15,7 +15,7 @@ import { Size, Theme } from "_theme";
 import { SpeakText } from "_utils";
 import { useSpeechToText } from "_hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "_store";
+import { RootState, switchMode } from "_store";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { detailsScreenNavigationType } from "../types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -107,6 +107,7 @@ export default function SearchScreen() {
   const [valueForSearch, setValueForSearch] = useState("");
   const [catg, setCatg] = useState<number | null>();
   const [influ, setInflu] = useState<number>();
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const categoriesFromStore = useSelector(
     (state: RootState) => state.search.categories,
@@ -133,6 +134,11 @@ export default function SearchScreen() {
       };
     }),
   );
+
+  const changeMode = () => {
+    setIsDarkMode(!isDarkMode);
+    dispatch(switchMode());
+  };
 
   const favorites = useSelector(
     (state: RootState) => state.favorites.favorites,
@@ -250,7 +256,7 @@ export default function SearchScreen() {
             <Icon name="shopping-bag" color="white" size={Size.ICON_MEDIUM} />
           </Box>
           <Column alignItems="center" justifyContent="center">
-            <Text variant={"primary"} color="black">
+            <Text variant={"primary"} color="text">
               {item.nom}
             </Text>
             <Text variant={"title"} color="primary" fontWeight={"bold"}>
@@ -279,14 +285,14 @@ export default function SearchScreen() {
           backgroundColor={item.choice ? "green" : "offWhite"}
           key={item.id}
           style={{ height: 100, width: 80 }}
-          marginHorizontal="s"
+          marginHorizontal="xs"
           paddingVertical="l"
           borderRadius="sm"
           alignItems={"center"}
           justifyContent="space-between"
         >
           <Icon
-            name="shopping-cart"
+            name="category"
             color={item.choice ? "white" : "green"}
             size={Size.ICON_SMALL}
           />
@@ -341,9 +347,17 @@ export default function SearchScreen() {
           <Text variant={"headerNavigation"} color="primary">
             Bonjour,
           </Text>
-          <Text variant="title">Bienvenu sur Tiakou</Text>
+          <Text variant="title" fontWeight={"bold"} color="text">
+            Bienvenu sur Tiakou
+          </Text>
         </Column>
-        <Icon name="wb-sunny" color="black" size={Size.ICON_MEDIUM} />
+        <TouchableOpacity onPress={() => changeMode()}>
+          <Icon
+            name={isDarkMode ? "nightlight-round" : "wb-sunny"}
+            color={isDarkMode ? "white" : "black"}
+            size={Size.ICON_MEDIUM}
+          />
+        </TouchableOpacity>
       </Row>
 
       {/**Recherche row */}
@@ -393,6 +407,7 @@ export default function SearchScreen() {
           renderItem={UnitCategorie}
           horizontal={true}
           extraData={categories}
+          showsHorizontalScrollIndicator={false}
         />
       </Box>
 
@@ -404,6 +419,7 @@ export default function SearchScreen() {
           data={influencys}
           renderItem={UnitInfluency}
           horizontal={true}
+          showsHorizontalScrollIndicator={false}
         />
       </Box>
 
@@ -416,6 +432,7 @@ export default function SearchScreen() {
           renderItem={UnitProduct}
           numColumns={2}
           extraData={products}
+          showsHorizontalScrollIndicator={false}
           ListEmptyComponent={
             <Box alignItems={"center"} justifyContent="center">
               <Text variant="bigTitle" color={"primary"} fontWeight="bold">
