@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import searchReducer from "../features/search/searchSlice";
 import functionnalityReducer from "./slice/functionnality";
 import publishReducer from "../features/publish/publishSlice";
+import favoriteReducer from "../features/favorite/favoriteSlice";
 
 export const store = configureStore({
   reducer: {
     search: searchReducer,
     cart: publishReducer,
+    favorites: favoriteReducer,
     functionnality: functionnalityReducer,
   },
 });

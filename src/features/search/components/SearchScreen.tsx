@@ -70,7 +70,16 @@ export default function SearchScreen() {
           alignItems={"center"}
           justifyContent="space-between"
         >
-          <Image source={item.image} style={styles.image} />
+          <Row style={{ marginLeft: 120 }}>
+            <Icon
+              name="favorite-outline"
+              color={colors.primary}
+              size={Size.ICON_MEDIUM}
+            />
+          </Row>
+          <Row style={{ marginTop: -38, zIndex: -1 }}>
+            <Image source={item.image} style={styles.image} />
+          </Row>
           <Box
             style={{ marginTop: -30 }}
             backgroundColor={"primary"}
@@ -82,7 +91,7 @@ export default function SearchScreen() {
             <Icon name="shopping-bag" color="white" size={Size.ICON_MEDIUM} />
           </Box>
           <Column alignItems="center" justifyContent="center">
-            <Text variant={"title"} color="black">
+            <Text variant={"primary"} color="black">
               {item.nom}
             </Text>
             <Text variant={"title"} color="primary" fontWeight={"bold"}>
@@ -165,7 +174,7 @@ export default function SearchScreen() {
         />
       </Box>
 
-      {/**Filter product */}
+      {/**product */}
       <Box style={{ flex: 1 }}>
         <FlashList
           keyExtractor={(item) => item.id.toString()}
