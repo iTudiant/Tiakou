@@ -215,7 +215,11 @@ export default function SearchScreen() {
 
   const UnitProduct: ListRenderItem<productsFavorites> = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("details_screen")}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("details_screen", { idProduct: item.id })
+        }
+      >
         <Box
           key={item.id}
           style={{ width: 180 }}

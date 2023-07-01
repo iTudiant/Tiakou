@@ -1,21 +1,45 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { Button, Icon } from "@rneui/themed";
 import { useTheme } from "@shopify/restyle";
-import { ScrollView } from "react-native";
+import { ScrollView, ToastAndroid } from "react-native";
 import { Image, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setProductsToCars } from "../../publish/publishSlice";
 import { Box, Column, MainScreen, Row, Text, TouchableOpacity } from "_shared";
 import { Size, Theme } from "_theme";
-import { achatScreenNavigationType } from "../types";
+import { cartScreenNavigationType } from "../types";
 import { useState } from "react";
+import { StackParamList } from "_navigations/Types";
+import { RootState } from "_store";
+
+type PropsProduct = {
+  id: number;
+  nom: "string";
+  description: "string";
+  image: string;
+  prix: number;
+  number: number;
+  categorie: number;
+  user: number;
+  is_finished: boolean;
+};
 
 export default function DetailScreen() {
   const theme = useTheme<Theme>();
   const colors = theme.colors;
-  const navigation = useNavigation<achatScreenNavigationType>();
+  const navigation = useNavigation<cartScreenNavigationType>();
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
+  const [isAddToCart, setAddToCart] = useState(false);
+  const route = useRoute<RouteProp<StackParamList, "details_screen">>();
+  const idProduct = route.params?.idProduct;
+  const productsFromStore = useSelector(
+    (state: RootState) => state.search.products,
+  ) as PropsProduct[];
+
+  const productToViewDetail = productsFromStore.filter(
+    (product) => product.id === idProduct,
+  );
 
   return (
     <MainScreen typeOfScreen="stack">
@@ -28,25 +52,27 @@ export default function DetailScreen() {
             containerStyle={[styles.icon, { backgroundColor: colors.offWhite }]}
           />
         </TouchableOpacity>
-        <Icon
-          name="shopping-cart"
-          size={Size.ICON_SMALL}
-          color={colors.primary}
-          containerStyle={[
-            styles.icon_cart,
-            { backgroundColor: colors.offWhite },
-          ]}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("publish_screen")}>
+          <Icon
+            name="shopping-cart"
+            size={Size.ICON_SMALL}
+            color={colors.primary}
+            containerStyle={[
+              styles.icon_cart,
+              { backgroundColor: colors.offWhite },
+            ]}
+          />
+        </TouchableOpacity>
       </Row>
       <Box style={{ marginTop: -40, zIndex: -1 }} marginBottom="s">
         <Image
-          source={require("_images/pull.jpg")}
+          source={productToViewDetail[0].image}
           style={styles.image_banniere}
         />
       </Box>
       <Column>
         <Text variant="title" fontWeight="bold">
-          Mug Agrad
+          {productToViewDetail[0].nom}
         </Text>
         <Box
           backgroundColor="primary"
@@ -60,7 +86,7 @@ export default function DetailScreen() {
             color="white"
             paddingVertical={"s"}
           >
-            10 000 Ar
+            {productToViewDetail[0].prix} Ar
           </Text>
         </Box>
         <ScrollView style={{ height: 200 }}>
@@ -68,7 +94,7 @@ export default function DetailScreen() {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
             modi ducimus dolore excepturi, quo distinctio tempora pariatur nulla
             ipsam in, beatae incidunt accusantium! Culpa, quaerat at! Voluptatem
-            labore enim repellendus!
+            labore enim repellendus! {productToViewDetail[0].description}
           </Text>
         </ScrollView>
         <Row marginVertical="m" justifyContent="space-between">
@@ -80,6 +106,10 @@ export default function DetailScreen() {
             <TouchableOpacity
               onPress={() => {
                 if (count === 1) {
+                  ToastAndroid.show(
+                    `Le nombre minimum que tu peux commander est 1`,
+                    ToastAndroid.LONG,
+                  );
                   return setCount(1);
                 }
                 setCount(count - 1);
@@ -96,7 +126,18 @@ export default function DetailScreen() {
               />
             </TouchableOpacity>
             <Text variant="bigTitle">{count}</Text>
-            <TouchableOpacity onPress={() => setCount(count + 1)}>
+            <TouchableOpacity
+              onPress={() => {
+                if (count < productToViewDetail[0].number) {
+                  setCount(count + 1);
+                } else {
+                  ToastAndroid.show(
+                    `Le nombre maximum que tu peux commander est ${productToViewDetail[0].number}`,
+                    ToastAndroid.LONG,
+                  );
+                }
+              }}
+            >
               <Icon
                 name="add"
                 size={20}
@@ -114,6 +155,7 @@ export default function DetailScreen() {
             buttonStyle={{
               backgroundColor: colors.primary,
             }}
+            loading={isAddToCart}
             containerStyle={{
               width: 150,
               shadowColor: "#000",
@@ -125,18 +167,30 @@ export default function DetailScreen() {
               shadowRadius: 4.65,
               elevation: 6,
             }}
-            onPress={() =>
-              dispatch(
-                setProductsToCars({ id: 2, quantity: count, prixUnity: 400 }),
-              )
-            }
+            onPress={() => {
+              setAddToCart(true);
+              setTimeout(() => {
+                dispatch(
+                  setProductsToCars({
+                    id: idProduct,
+                    quantity: count,
+                    prixUnity: productToViewDetail[0].prix,
+                  }),
+                );
+                ToastAndroid.show(
+                  `Votre commande a été ajouté dans votre panier`,
+                  ToastAndroid.LONG,
+                );
+                setAddToCart(false);
+              }, 4000);
+            }}
           >
             <Icon
               name="shopping-bag"
               color={colors.white}
               size={Size.ICON_SMALL}
             />
-            Acheter
+            Ajouter au panier
           </Button>
         </Row>
       </Column>

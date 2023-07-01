@@ -1,7 +1,7 @@
-import { StackParamList } from "src/navigations/Types";
+import { StackParamList, TabParamList } from "src/navigations/Types";
 import { StackNavigationProp } from "@react-navigation/stack";
 
-export type achatScreenNavigationType = StackNavigationProp<
-  StackParamList,
-  "achat_screen"
+export type cartScreenNavigationType = StackNavigationProp<
+  TabParamList,
+  "publish_screen"
 >;
