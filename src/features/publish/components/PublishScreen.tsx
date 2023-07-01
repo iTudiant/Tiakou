@@ -68,11 +68,14 @@ export default function PublishScreen() {
   );
 
   const calculateTotalPrice = (cart: PropsCart[]) => {
+    if (!cart) {
+      return;
+    }
     let prixTotal = 0;
     let totalPerProduct = cart.map((item) => {
       return item.quantity * item.prixUnity;
     });
-    if (totalPerProduct) {
+    if (totalPerProduct.length > 0) {
       prixTotal = totalPerProduct.reduce((acc, curr) => {
         return acc + curr;
       });
@@ -82,9 +85,10 @@ export default function PublishScreen() {
   };
 
   const calculateTotalNumber = (cart: PropsCart[]) => {
-    if (!cart) {
+    if (cart.length === 0) {
       return;
     }
+
     let numberTotal = cart.reduce((acc, item) => {
       return acc + item.quantity;
     }, 0);
@@ -98,6 +102,7 @@ export default function PublishScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      console.log("ato oooo");
       setProducts(
         productsFromStore
           .map((item) => {
@@ -115,58 +120,61 @@ export default function PublishScreen() {
             return carts.some((cart) => cart.id === product.id);
           }),
       );
-    }, [productsFromStore]),
+    }, [productsFromStore, carts]),
   );
 
-  const renderItemProduct: ListRenderItem<PropsProduct> = ({ item }) => {
-    return (
-      <Box
-        key={item.id}
-        borderRadius="sm"
-        backgroundColor={"white"}
-        marginBottom="s"
-        style={styles.card_shadow}
-      >
-        <Image
-          source={item.image}
-          style={{
-            height: 60,
-            width: "100%",
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            resizeMode: "cover",
-          }}
-        />
-        <Row
-          alignItems="center"
-          justifyContent="space-between"
-          marginVertical="s"
-          marginHorizontal="m"
+  const renderItemProduct: ListRenderItem<PropsProduct> = useCallback(
+    ({ item }) => {
+      return (
+        <Box
+          key={item.id}
+          borderRadius="sm"
+          backgroundColor={"white"}
+          marginBottom="s"
+          style={styles.card_shadow}
         >
-          <Column>
-            <Text variant="primary" fontWeight={"bold"} color="primary">
-              {item.nom}
-            </Text>
-            <Text variant={"title"} fontWeight={"bold"}>
-              {item.prix} x {item.quantity}
-            </Text>
-          </Column>
-          <Column>
-            <TouchableOpacity onPress={() => handleRemoveOneCart(item.id)}>
-              <Icon
-                name="delete"
-                color={colors.primary}
-                size={Size.ICON_SMALL}
-              />
-            </TouchableOpacity>
-            <Text variant="primary" color={"secondary"} fontWeight={"bold"}>
-              {item.prix * item.quantity} Ar
-            </Text>
-          </Column>
-        </Row>
-      </Box>
-    );
-  };
+          <Image
+            source={item.image}
+            style={{
+              height: 60,
+              width: "100%",
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+              resizeMode: "cover",
+            }}
+          />
+          <Row
+            alignItems="center"
+            justifyContent="space-between"
+            marginVertical="s"
+            marginHorizontal="m"
+          >
+            <Column>
+              <Text variant="primary" fontWeight={"bold"} color="primary">
+                {item.nom}
+              </Text>
+              <Text variant={"title"} fontWeight={"bold"}>
+                {item.prix} x {item.quantity}
+              </Text>
+            </Column>
+            <Column>
+              <TouchableOpacity onPress={() => handleRemoveOneCart(item.id)}>
+                <Icon
+                  name="delete"
+                  color={colors.primary}
+                  size={Size.ICON_SMALL}
+                />
+              </TouchableOpacity>
+              <Text variant="primary" color={"secondary"} fontWeight={"bold"}>
+                {item.prix * item.quantity} Ar
+              </Text>
+            </Column>
+          </Row>
+        </Box>
+      );
+    },
+    [],
+  );
 
   return (
     <MainScreen typeOfScreen="tab" titleTabScreen="Panier">
@@ -191,7 +199,7 @@ export default function PublishScreen() {
                     Prix total :
                   </Text>
                   <Text variant="primaryBold" color="white">
-                    {products.length > 0 ? calculateTotalPrice(carts) : 0} Ar
+                    {carts.length > 0 ? calculateTotalPrice(carts) : 0} Ar
                   </Text>
                 </Row>
                 <Row justifyContent="space-between">
@@ -199,7 +207,7 @@ export default function PublishScreen() {
                     Quantité total des produits :
                   </Text>
                   <Text variant="primaryBold" color="white">
-                    {products.length > 0 ? calculateTotalNumber(carts) : 0}
+                    {carts.length > 0 ? calculateTotalNumber(carts) : 0}
                   </Text>
                 </Row>
               </Box>

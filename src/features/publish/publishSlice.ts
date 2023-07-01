@@ -3,18 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { PublishState, Cart } from "./types";
 
 const initialState: PublishState = {
-  carts: [
-    {
-      id: 1,
-      quantity: 2,
-      prixUnity: 2000,
-    },
-    {
-      id: 3,
-      quantity: 5,
-      prixUnity: 400,
-    },
-  ],
+  carts: [],
 };
 
 export const publishSlice = createSlice({
