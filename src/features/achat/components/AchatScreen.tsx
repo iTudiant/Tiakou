@@ -25,6 +25,7 @@ export default function AchatScreen() {
     prixTotal: 0,
     date: "01/06/2023",
   });
+  const [numberPhone, setNumberPhone] = useState("");
 
   const carts = useSelector(
     (state: RootState) => state.cart.carts,
@@ -96,6 +97,8 @@ export default function AchatScreen() {
         <Input
           placeholder="Votre numéro téléphone ici ..."
           style={{ fontSize: 24 }}
+          onChangeText={(text) => setNumberPhone(text)}
+          value={numberPhone}
           errorMessage="0/10"
           errorStyle={{ color: colors.black }}
         />
@@ -185,6 +188,7 @@ export default function AchatScreen() {
               payMyCart();
               setTimeout(() => {
                 setResumeSummary({ prixTotal: 0, date: "" });
+                setNumberPhone("");
               }, 2000);
             }}
           />
