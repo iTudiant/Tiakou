@@ -42,7 +42,8 @@ const initialState: SearchState = {
     {
       id: 2,
       nom: "Pull",
-      description: "Pull jolie",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis modi ducimus dolore excepturi, quo distinctio tempora pariatur nulla ipsam in, beatae incidunt accusantium! Culpa, quaerat at! Voluptatem labore enim repellendus!",
       image: require("_images/pull.jpg"),
       prix: 2000.0,
       categorie: 2,

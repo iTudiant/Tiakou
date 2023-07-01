@@ -11,6 +11,7 @@ import { cartScreenNavigationType } from "../types";
 import { useState } from "react";
 import { StackParamList } from "_navigations/Types";
 import { RootState } from "_store";
+import { SpeakText } from "_utils";
 
 type PropsProduct = {
   id: number;
@@ -40,6 +41,7 @@ export default function DetailScreen() {
   const productToViewDetail = productsFromStore.filter(
     (product) => product.id === idProduct,
   );
+  const [isSpeak, setIsSpeak] = useState(false);
 
   return (
     <MainScreen typeOfScreen="stack">
@@ -71,30 +73,39 @@ export default function DetailScreen() {
         />
       </Box>
       <Column>
-        <Text variant="title" fontWeight="bold">
-          {productToViewDetail[0].nom}
-        </Text>
-        <Box
-          backgroundColor="primary"
-          style={{ width: 100, marginVertical: 8 }}
-          borderRadius="xs"
-        >
-          <Text
-            variant={"secondary"}
-            textAlign="center"
-            fontWeight="bold"
-            color="white"
-            paddingVertical={"s"}
-          >
-            {productToViewDetail[0].prix} Ar
-          </Text>
-        </Box>
+        <Row alignItems="center" justifyContent="space-between">
+          <Column>
+            <Text variant="title" fontWeight="bold">
+              {productToViewDetail[0].nom}
+            </Text>
+            <Box
+              backgroundColor="primary"
+              style={{ width: 100, marginVertical: 8 }}
+              borderRadius="xs"
+            >
+              <Text
+                variant={"secondary"}
+                textAlign="center"
+                fontWeight="bold"
+                color="white"
+                paddingVertical={"s"}
+              >
+                {productToViewDetail[0].prix} Ar
+              </Text>
+            </Box>
+          </Column>
+          <Icon
+            name={!isSpeak ? "play-circle-filled" : "stop"}
+            color={colors.primary}
+            size={Size.ICON_MEDIUM}
+            onPress={() => {
+              SpeakText(true, productToViewDetail[0].description);
+            }}
+          />
+        </Row>
         <ScrollView style={{ height: 200 }}>
           <Text variant="primary" textAlign={"justify"}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-            modi ducimus dolore excepturi, quo distinctio tempora pariatur nulla
-            ipsam in, beatae incidunt accusantium! Culpa, quaerat at! Voluptatem
-            labore enim repellendus! {productToViewDetail[0].description}
+            {productToViewDetail[0].description}
           </Text>
         </ScrollView>
         <Row marginVertical="m" justifyContent="space-between">
