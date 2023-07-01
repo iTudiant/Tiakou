@@ -182,7 +182,7 @@ export default function DetailScreen() {
                   ToastAndroid.LONG,
                 );
                 setAddToCart(false);
-              }, 4000);
+              }, 3000);
             }}
           >
             <Icon

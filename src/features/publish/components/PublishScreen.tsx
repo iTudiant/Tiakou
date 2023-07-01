@@ -143,6 +143,7 @@ export default function PublishScreen() {
           keyExtractor={(item) => item.id.toString()}
           estimatedItemSize={60}
           data={products}
+          extraData={products}
           renderItem={renderItemProduct}
           ListFooterComponent={
             <Column>
