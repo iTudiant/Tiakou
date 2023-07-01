@@ -33,9 +33,12 @@ export const publishSlice = createSlice({
         state.carts = [...state.carts, action.payload];
       }
     },
+    removeOneCart: (state, action: PayloadAction<number>) => {
+      state.carts = state.carts.filter((cart) => cart.id !== action.payload);
+    },
   },
 });
 
-export const { setProductsToCars } = publishSlice.actions;
+export const { setProductsToCars, removeOneCart } = publishSlice.actions;
 
 export default publishSlice.reducer;

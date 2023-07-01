@@ -1,11 +1,21 @@
 import { Image, StyleSheet } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Box, Column, Icon, MainScreen, Row, Text } from "_shared";
+import {
+  Box,
+  Column,
+  Icon,
+  MainScreen,
+  Row,
+  Text,
+  TouchableOpacity,
+} from "_shared";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "_store";
-import { Size } from "_theme";
+import { Size, Theme } from "_theme";
 import { useCallback, useState } from "react";
+import { useTheme } from "@shopify/restyle";
+import { removeOneCart } from "../publishSlice";
 
 type PropsProduct = {
   id: number;
@@ -27,6 +37,9 @@ type PropsCart = {
 
 export default function PublishScreen() {
   //const navigation = useNavigation<>();
+  const theme = useTheme<Theme>();
+  const { colors, sizes } = theme;
+  const dispatch = useDispatch();
 
   const carts = useSelector(
     (state: RootState) => state.cart.carts,
@@ -59,18 +72,28 @@ export default function PublishScreen() {
     let totalPerProduct = cart.map((item) => {
       return item.quantity * item.prixUnity;
     });
-    prixTotal = totalPerProduct.reduce((acc, curr) => {
-      return acc + curr;
-    });
+    if (totalPerProduct) {
+      prixTotal = totalPerProduct.reduce((acc, curr) => {
+        return acc + curr;
+      });
+    }
 
     return prixTotal;
   };
 
   const calculateTotalNumber = (cart: PropsCart[]) => {
+    if (!cart) {
+      return;
+    }
     let numberTotal = cart.reduce((acc, item) => {
       return acc + item.quantity;
     }, 0);
     return numberTotal;
+  };
+
+  const handleRemoveOneCart = (id: number) => {
+    dispatch(removeOneCart(id));
+    setProducts((prevList) => prevList.filter((item) => item.id !== id));
   };
 
   useFocusEffect(
@@ -128,9 +151,18 @@ export default function PublishScreen() {
               {item.prix} x {item.quantity}
             </Text>
           </Column>
-          <Text variant="primary" color={"secondary"} fontWeight={"bold"}>
-            {item.prix * item.quantity}
-          </Text>
+          <Column>
+            <TouchableOpacity onPress={() => handleRemoveOneCart(item.id)}>
+              <Icon
+                name="delete"
+                color={colors.primary}
+                size={Size.ICON_SMALL}
+              />
+            </TouchableOpacity>
+            <Text variant="primary" color={"secondary"} fontWeight={"bold"}>
+              {item.prix * item.quantity} Ar
+            </Text>
+          </Column>
         </Row>
       </Box>
     );
@@ -159,7 +191,7 @@ export default function PublishScreen() {
                     Prix total :
                   </Text>
                   <Text variant="primaryBold" color="white">
-                    {calculateTotalPrice(carts)} Ar
+                    {products.length > 0 ? calculateTotalPrice(carts) : 0} Ar
                   </Text>
                 </Row>
                 <Row justifyContent="space-between">
@@ -167,48 +199,55 @@ export default function PublishScreen() {
                     Quantité total des produits :
                   </Text>
                   <Text variant="primaryBold" color="white">
-                    {calculateTotalNumber(carts)}
+                    {products.length > 0 ? calculateTotalNumber(carts) : 0}
                   </Text>
                 </Row>
               </Box>
-              <Row marginVertical="s" justifyContent="space-between">
-                <Box
-                  backgroundColor="white"
-                  style={[
-                    styles.card_shadow_payment,
-                    {
-                      height: 80,
-                      width: "45%",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: 16,
-                    },
-                  ]}
-                >
-                  <Image
-                    source={require("_images/mug.jpg")}
-                    style={styles.image_payment}
-                  />
-                </Box>
-                <Box
-                  backgroundColor="white"
-                  style={[
-                    styles.card_shadow_payment,
-                    {
-                      height: 80,
-                      width: "45%",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: 16,
-                    },
-                  ]}
-                >
-                  <Image
-                    source={require("_images/mug.jpg")}
-                    style={styles.image_payment}
-                  />
-                </Box>
-              </Row>
+              {products.length > 0 && (
+                <Row marginVertical="s" justifyContent="space-between">
+                  <Box
+                    backgroundColor="white"
+                    style={[
+                      styles.card_shadow_payment,
+                      {
+                        height: 80,
+                        width: "45%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: 16,
+                      },
+                    ]}
+                  >
+                    <TouchableOpacity>
+                      <Image
+                        source={require("_images/mug.jpg")}
+                        style={styles.image_payment}
+                      />
+                    </TouchableOpacity>
+                  </Box>
+
+                  <Box
+                    backgroundColor="white"
+                    style={[
+                      styles.card_shadow_payment,
+                      {
+                        height: 80,
+                        width: "45%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: 16,
+                      },
+                    ]}
+                  >
+                    <TouchableOpacity>
+                      <Image
+                        source={require("_images/mug.jpg")}
+                        style={styles.image_payment}
+                      />
+                    </TouchableOpacity>
+                  </Box>
+                </Row>
+              )}
             </Column>
           }
         />
