@@ -231,7 +231,7 @@ export default function PublishScreen() {
                       onPress={() => navigation.navigate("achat_screen")}
                     >
                       <Image
-                        source={require("_images/paypal.png")}
+                        source={require("_images/orangeMoney.png")}
                         style={styles.image_payment}
                       />
                     </TouchableOpacity>
@@ -287,7 +287,6 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   image_payment: {
-    backgroundColor: "red",
     height: 50,
     width: 130,
   },

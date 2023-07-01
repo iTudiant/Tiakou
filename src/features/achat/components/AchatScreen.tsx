@@ -83,7 +83,7 @@ export default function AchatScreen() {
           </TouchableOpacity>
         </Row>
         <Image
-          source={require("_images/mug.jpg")}
+          source={require("_images/orangeMoney.png")}
           style={styles.banniere_orange}
         />
         <Text
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   banniere_orange: {
     marginTop: 30,
-    height: 180,
+    height: 170,
     marginBottom: 18,
     width: "100%",
   },
