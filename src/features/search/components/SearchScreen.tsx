@@ -20,7 +20,9 @@ import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { UnitCategorie } from "./UnitCategorie";
 import { UnitInfluency } from "./UnitInfluency";
 import { detailsScreenNavigationType } from "../types";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import { setFavorites } from "../../../features/favorite/favoriteSlice";
 
 type PropsFIlter = {
   id: number;
@@ -39,6 +41,18 @@ type PropsProduct = {
   is_finished: boolean;
 };
 
+type productsFavorites = {
+  id: number;
+  nom: "string";
+  description: "string";
+  image: string;
+  prix: number;
+  categorie: number;
+  user: number;
+  is_finished: boolean;
+  isFavorite: boolean;
+};
+
 export default function SearchScreen() {
   const theme = useTheme<Theme>();
   const { colors, sizes } = theme;
@@ -55,11 +69,46 @@ export default function SearchScreen() {
     (state: RootState) => state.search.influencys,
   ) as PropsFIlter[];
 
-  const products = useSelector(
+  const favorites = useSelector(
+    (state: RootState) => state.favorites.favorites,
+  ) as number[];
+
+  const productsFromStore = useSelector(
     (state: RootState) => state.search.products,
   ) as PropsProduct[];
 
-  const UnitProduct: ListRenderItem<PropsProduct> = ({ item }) => {
+  const [products, setProducts] = useState(
+    productsFromStore.map((product) => {
+      return {
+        ...product,
+        isFavorite: favorites.includes(product.id),
+      };
+    }),
+  );
+
+  const handleToogleFavorite = (id: number) => {
+    dispatch(setFavorites(id));
+    setProducts((prevList) =>
+      prevList.map((item) =>
+        item.id === id ? { ...item, isFavorite: !item.isFavorite } : item,
+      ),
+    );
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setProducts((prevList) =>
+        prevList.map((item) => {
+          return {
+            ...item,
+            isFavorite: favorites.includes(item.id),
+          };
+        }),
+      );
+    }, [favorites]),
+  );
+
+  const UnitProduct: ListRenderItem<productsFavorites> = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate("details_screen")}>
         <Box
@@ -71,11 +120,13 @@ export default function SearchScreen() {
           justifyContent="space-between"
         >
           <Row style={{ marginLeft: 120 }}>
-            <Icon
-              name="favorite-outline"
-              color={colors.primary}
-              size={Size.ICON_MEDIUM}
-            />
+            <TouchableOpacity onPress={() => handleToogleFavorite(item.id)}>
+              <Icon
+                name={item.isFavorite ? "favorite" : "favorite-outline"}
+                color={colors.primary}
+                size={Size.ICON_MEDIUM}
+              />
+            </TouchableOpacity>
           </Row>
           <Row style={{ marginTop: -38, zIndex: -1 }}>
             <Image source={item.image} style={styles.image} />
