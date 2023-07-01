@@ -5,6 +5,7 @@ import TouchableOpacity from "./TouchableOpacity";
 import { Alert } from "react-native";
 import Button from "./Button";
 import Row from "./Row";
+import { Icon, Input } from "@rneui/themed";
 
 type Props = {
   children: React.ReactNode;
@@ -28,11 +29,19 @@ const ComponentUserNotLogged = ({
   return (
     <Box paddingVertical="m" backgroundColor="mainBackground">
       {title && <Text variant="bigTitle">{title}</Text>}
-      <Row marginBottom="s">
+      <Row marginBottom="m">
         <Text variant="title" color="secondary">
           {subTitle}
         </Text>
       </Row>
+      <Input
+        placeholder="Numéro télépone"
+        leftIcon={<Icon name="person" color={"#b03043"} />}
+      />
+      <Input
+        placeholder="Mot de passe"
+        leftIcon={<Icon name="lock" color={"#b03043"} />}
+      />
       <Button label="Connexion" onPress={loggedIn} />
       <Row marginVertical="s">
         <Text variant="tertiary">Vous n'avez pas de compte ?</Text>
