@@ -21,7 +21,7 @@ import { UnitCategorie } from "./UnitCategorie";
 import { UnitInfluency } from "./UnitInfluency";
 import { detailsScreenNavigationType } from "../types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { setFavorites } from "../../../features/favorite/favoriteSlice";
 
 type PropsFIlter = {
@@ -53,6 +53,38 @@ type productsFavorites = {
   isFavorite: boolean;
 };
 
+const filterGlobal = (
+  array: Array<productsFavorites>,
+  categorie: number | undefined | null,
+  influency: number | undefined | null,
+  query: string | undefined | null,
+) => {
+  let res =
+    (categorie === null || categorie === undefined) &&
+    (influency === null || influency === undefined) &&
+    (query === null || query === undefined)
+      ? []
+      : array;
+
+  if (categorie) {
+    res = res.filter((_product) => _product.categorie === categorie);
+  }
+
+  if (influency) {
+    res = res.filter((_product) => _product.user === influency);
+  }
+
+  if (query) {
+    res = res.filter(
+      (_product) =>
+        _product.nom.toLowerCase().includes(query.toLowerCase()) ||
+        _product.description.toLowerCase().includes(query.toLowerCase()),
+    );
+  }
+
+  return res;
+};
+
 export default function SearchScreen() {
   const theme = useTheme<Theme>();
   const { colors, sizes } = theme;
@@ -60,6 +92,9 @@ export default function SearchScreen() {
     useSpeechToText();
   const dispatch = useDispatch();
   const navigation = useNavigation<detailsScreenNavigationType>();
+  const [valueForSearch, setValueForSearch] = useState("");
+  const [catg, setCatg] = useState<number>();
+  const [influ, setInflu] = useState<number>();
 
   const categories = useSelector(
     (state: RootState) => state.search.categories,
@@ -107,6 +142,25 @@ export default function SearchScreen() {
       );
     }, [favorites]),
   );
+
+  useEffect(() => {
+    setValueForSearch(textFromSpeech);
+  }, [textFromSpeech]);
+
+  useEffect(() => {
+    if (catg || influ || valueForSearch) {
+      setProducts(filterGlobal(products, catg, influ, valueForSearch));
+    } else {
+      setProducts(
+        productsFromStore.map((product) => {
+          return {
+            ...product,
+            isFavorite: favorites.includes(product.id),
+          };
+        }),
+      );
+    }
+  }, [catg, influ, valueForSearch]);
 
   const UnitProduct: ListRenderItem<productsFavorites> = ({ item }) => {
     return (
@@ -175,6 +229,8 @@ export default function SearchScreen() {
       >
         <TextInput
           placeholder="Rechercher"
+          value={valueForSearch}
+          onChangeText={(text) => setValueForSearch(text)}
           style={[
             {
               backgroundColor: colors.offWhite,
@@ -233,6 +289,14 @@ export default function SearchScreen() {
           data={products}
           renderItem={UnitProduct}
           numColumns={2}
+          extraData={products}
+          ListEmptyComponent={
+            <Box alignItems={"center"} justifyContent="center">
+              <Text variant="bigTitle" color={"primary"} fontWeight="bold">
+                Il n'y a pas de résultat pour "{valueForSearch}"
+              </Text>
+            </Box>
+          }
         />
       </Box>
     </MainScreen>

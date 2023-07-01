@@ -44,7 +44,10 @@ export const useSpeechToText = () => {
   };
 
   const onSpeechError = ({ error }: SpeechErrorEvent) => {
-    console.log("error speech to text : ", error);
+    ToastAndroid.show(
+      "Veuillez bien prononcer le mot en français...",
+      ToastAndroid.LONG,
+    );
   };
 
   return { isStartRecord, textFromSpeech, startSpeechToText, stopSpeechToText };
