@@ -1,52 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { PublishState } from "./types";
+import { PublishState, Cart } from "./types";
 
 const initialState: PublishState = {
   carts: [
     {
       id: 1,
-      nom: "Mug",
-      description: "Mug jolie",
-      image: require("_images/mug.jpg"),
-      prix: 2000.0,
-      categorie: 1,
-      user: 2,
-      number: 12,
-      is_finished: false,
-    },
-    {
-      id: 2,
-      nom: "Pull",
-      description: "Pull jolie",
-      image: require("_images/pull.jpg"),
-      prix: 2000.0,
-      categorie: 1,
-      user: 2,
-      number: 12,
-      is_finished: false,
+      quantity: 2,
+      prixUnity: 2000,
     },
     {
       id: 3,
-      nom: "Pull black",
-      description: "Mug jolie",
-      image: require("_images/pull_black.jpg"),
-      prix: 400.0,
-      categorie: 1,
-      user: 2,
-      number: 12,
-      is_finished: false,
-    },
-    {
-      id: 4,
-      nom: "Mug spiderman",
-      description: "Pull jolie",
-      image: require("_images/pull.jpg"),
-      prix: 2000.0,
-      categorie: 1,
-      user: 2,
-      number: 12,
-      is_finished: false,
+      quantity: 5,
+      prixUnity: 400,
     },
   ],
 };
@@ -55,8 +21,17 @@ export const publishSlice = createSlice({
   name: "publish",
   initialState,
   reducers: {
-    setProductsToCars: (state, action: PayloadAction<object[]>) => {
-      state.carts = [...state.carts, action.payload];
+    setProductsToCars: (state, action: PayloadAction<Cart>) => {
+      let currentId = state.carts.map((cart) => cart.id);
+      if (currentId.includes(action.payload.id)) {
+        let oldCart = state.carts.filter(
+          (cart) => cart.id === action.payload.id,
+        );
+        oldCart[0].quantity = action.payload.quantity;
+        state.carts = [...state.carts, ...oldCart];
+      } else {
+        state.carts = [...state.carts, action.payload];
+      }
     },
   },
 });

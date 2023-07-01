@@ -1,10 +1,11 @@
 import { Image, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Box, Column, Icon, MainScreen, Row, Text } from "_shared";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { useSelector } from "react-redux";
 import { RootState } from "_store";
 import { Size } from "_theme";
+import { useCallback, useState } from "react";
 
 type PropsProduct = {
   id: number;
@@ -15,6 +16,13 @@ type PropsProduct = {
   categorie: number;
   user: number;
   is_finished: boolean;
+  quantity: number;
+};
+
+type PropsCart = {
+  id: number;
+  quantity: number;
+  prixUnity: number;
 };
 
 export default function PublishScreen() {
@@ -22,7 +30,70 @@ export default function PublishScreen() {
 
   const carts = useSelector(
     (state: RootState) => state.cart.carts,
+  ) as PropsCart[];
+
+  const productsFromStore = useSelector(
+    (state: RootState) => state.search.products,
   ) as PropsProduct[];
+
+  const [products, setProducts] = useState(
+    productsFromStore
+      .map((item) => {
+        let cartItem = carts.find((cartItem) => {
+          return cartItem.id === item.id;
+        });
+
+        if (cartItem) {
+          return { ...item, quantity: cartItem.quantity };
+        } else {
+          return { ...item, quantity: 0 };
+        }
+      })
+      .filter((product) => {
+        return carts.some((cart) => cart.id === product.id);
+      }),
+  );
+
+  const calculateTotalPrice = (cart: PropsCart[]) => {
+    let prixTotal = 0;
+    let totalPerProduct = cart.map((item) => {
+      return item.quantity * item.prixUnity;
+    });
+    prixTotal = totalPerProduct.reduce((acc, curr) => {
+      return acc + curr;
+    });
+
+    return prixTotal;
+  };
+
+  const calculateTotalNumber = (cart: PropsCart[]) => {
+    let numberTotal = cart.reduce((acc, item) => {
+      return acc + item.quantity;
+    }, 0);
+    return numberTotal;
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setProducts(
+        productsFromStore
+          .map((item) => {
+            let cartItem = carts.find((cartItem) => {
+              return cartItem.id === item.id;
+            });
+
+            if (cartItem) {
+              return { ...item, quantity: cartItem.quantity };
+            } else {
+              return { ...item, quantity: 0 };
+            }
+          })
+          .filter((product) => {
+            return carts.some((cart) => cart.id === product.id);
+          }),
+      );
+    }, [productsFromStore]),
+  );
 
   const renderItemProduct: ListRenderItem<PropsProduct> = ({ item }) => {
     return (
@@ -54,11 +125,11 @@ export default function PublishScreen() {
               {item.nom}
             </Text>
             <Text variant={"title"} fontWeight={"bold"}>
-              {item.prix} x2
+              {item.prix} x {item.quantity}
             </Text>
           </Column>
           <Text variant="primary" color={"secondary"} fontWeight={"bold"}>
-            10000 Ar
+            {item.prix * item.quantity}
           </Text>
         </Row>
       </Box>
@@ -71,7 +142,7 @@ export default function PublishScreen() {
         <FlashList
           keyExtractor={(item) => item.id.toString()}
           estimatedItemSize={60}
-          data={carts}
+          data={products}
           renderItem={renderItemProduct}
           ListFooterComponent={
             <Column>
@@ -87,7 +158,7 @@ export default function PublishScreen() {
                     Prix total :
                   </Text>
                   <Text variant="primaryBold" color="white">
-                    120 000 Ar
+                    {calculateTotalPrice(carts)} Ar
                   </Text>
                 </Row>
                 <Row justifyContent="space-between">
@@ -95,7 +166,7 @@ export default function PublishScreen() {
                     Quantité total des produits :
                   </Text>
                   <Text variant="primaryBold" color="white">
-                    12
+                    {calculateTotalNumber(carts)}
                   </Text>
                 </Row>
               </Box>

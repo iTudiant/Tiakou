@@ -1,5 +1,11 @@
 /*Slice*/
 
 export type PublishState = {
-  carts: object[];
+  carts: Cart[];
+};
+
+export type Cart = {
+  id: number;
+  quantity: number;
+  prixUnity: number;
 };
