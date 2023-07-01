@@ -3,14 +3,19 @@ import { Button, Icon } from "@rneui/themed";
 import { useTheme } from "@shopify/restyle";
 import { ScrollView } from "react-native";
 import { Image, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
+import { setProductsToCars } from "../../publish/publishSlice";
 import { Box, Column, MainScreen, Row, Text, TouchableOpacity } from "_shared";
 import { Size, Theme } from "_theme";
 import { achatScreenNavigationType } from "../types";
+import { useState } from "react";
 
 export default function DetailScreen() {
   const theme = useTheme<Theme>();
   const colors = theme.colors;
   const navigation = useNavigation<achatScreenNavigationType>();
+  const dispatch = useDispatch();
+  const [count, setCount] = useState(1);
 
   return (
     <MainScreen typeOfScreen="stack">
@@ -72,25 +77,36 @@ export default function DetailScreen() {
             justifyContent="space-between"
             style={{ width: 100 }}
           >
-            <Icon
-              name="remove"
-              size={20}
-              color={colors.white}
-              containerStyle={[
-                styles.icon_footer,
-                { backgroundColor: colors.primary },
-              ]}
-            />
-            <Text variant="bigTitle">1</Text>
-            <Icon
-              name="add"
-              size={20}
-              color={colors.white}
-              containerStyle={[
-                styles.icon_footer,
-                { backgroundColor: colors.primary },
-              ]}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                if (count === 1) {
+                  return setCount(1);
+                }
+                setCount(count - 1);
+              }}
+            >
+              <Icon
+                name="remove"
+                size={20}
+                color={colors.white}
+                containerStyle={[
+                  styles.icon_footer,
+                  { backgroundColor: colors.primary },
+                ]}
+              />
+            </TouchableOpacity>
+            <Text variant="bigTitle">{count}</Text>
+            <TouchableOpacity onPress={() => setCount(count + 1)}>
+              <Icon
+                name="add"
+                size={20}
+                color={colors.white}
+                containerStyle={[
+                  styles.icon_footer,
+                  { backgroundColor: colors.primary },
+                ]}
+              />
+            </TouchableOpacity>
           </Row>
           <Button
             radius={"xl"}
@@ -109,7 +125,11 @@ export default function DetailScreen() {
               shadowRadius: 4.65,
               elevation: 6,
             }}
-            onPress={() => navigation.navigate("achat_screen")}
+            onPress={() =>
+              dispatch(
+                setProductsToCars({ id: 2, quantity: count, prixUnity: 400 }),
+              )
+            }
           >
             <Icon
               name="shopping-bag"
