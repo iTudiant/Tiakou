@@ -17,7 +17,6 @@ import { useSpeechToText } from "_hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "_store";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
-import { UnitInfluency } from "./UnitInfluency";
 import { detailsScreenNavigationType } from "../types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
