@@ -17,7 +17,6 @@ import { useSpeechToText } from "_hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "_store";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
-import { UnitCategorie } from "./UnitCategorie";
 import { UnitInfluency } from "./UnitInfluency";
 import { detailsScreenNavigationType } from "../types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -53,6 +52,19 @@ type productsFavorites = {
   isFavorite: boolean;
 };
 
+type PropsInfluency = {
+  id: number;
+  nom: "string";
+  description: "string";
+};
+
+type PropsCategorie = {
+  id: number;
+  nom: "string";
+  description: "string";
+  choice: boolean;
+};
+
 const filterGlobal = (
   array: Array<productsFavorites>,
   categorie: number | undefined | null,
@@ -67,7 +79,7 @@ const filterGlobal = (
       : array;
 
   if (categorie) {
-    res = res.filter((_product) => _product.categorie === categorie);
+    res = res.filter((_product) => _product.categorie !== categorie);
   }
 
   if (influency) {
@@ -93,12 +105,21 @@ export default function SearchScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation<detailsScreenNavigationType>();
   const [valueForSearch, setValueForSearch] = useState("");
-  const [catg, setCatg] = useState<number>();
+  const [catg, setCatg] = useState<number | null>();
   const [influ, setInflu] = useState<number>();
 
-  const categories = useSelector(
+  const categoriesFromStore = useSelector(
     (state: RootState) => state.search.categories,
   ) as PropsFIlter[];
+
+  const [categories, setCategories] = useState(
+    categoriesFromStore.map((ctg) => {
+      return {
+        ...ctg,
+        choice: false,
+      };
+    }),
+  );
 
   const influencys = useSelector(
     (state: RootState) => state.search.influencys,
@@ -120,6 +141,16 @@ export default function SearchScreen() {
       };
     }),
   );
+
+  const handleChooseCategorie = (idCatg: number) => {
+    setCategories((prevList) =>
+      prevList.map((item) =>
+        item.id === idCatg
+          ? { ...item, choice: !item.choice }
+          : { ...item, choice: false },
+      ),
+    );
+  };
 
   const handleToogleFavorite = (id: number) => {
     dispatch(setFavorites(id));
@@ -208,6 +239,61 @@ export default function SearchScreen() {
     );
   };
 
+  const UnitCategorie: ListRenderItem<PropsCategorie> = ({ item }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          if (item.choice) {
+            handleChooseCategorie(item.id);
+            setCatg(null);
+          } else {
+            handleChooseCategorie(item.id);
+            setCatg(item.id);
+          }
+        }}
+      >
+        <Column
+          backgroundColor={item.choice ? "green" : "offWhite"}
+          key={item.id}
+          style={{ height: 100, width: 80 }}
+          marginHorizontal="s"
+          paddingVertical="l"
+          borderRadius="sm"
+          alignItems={"center"}
+          justifyContent="space-between"
+        >
+          <Icon
+            name="shopping-cart"
+            color={item.choice ? "white" : "green"}
+            size={Size.ICON_SMALL}
+          />
+          <Text variant={"primary"} color={item.choice ? "white" : "black"}>
+            {item.nom}
+          </Text>
+        </Column>
+      </TouchableOpacity>
+    );
+  };
+
+  const UnitInfluency: ListRenderItem<PropsInfluency> = ({ item }) => {
+    return (
+      <Row
+        backgroundColor="offWhite"
+        key={item.id}
+        style={{ height: 50, width: 100 }}
+        marginHorizontal="xs"
+        paddingVertical="l"
+        borderRadius="sm"
+        alignItems={"center"}
+        justifyContent="center"
+      >
+        <Text variant={"primary"} color="primary" fontWeight={"bold"}>
+          {item.nom}
+        </Text>
+      </Row>
+    );
+  };
+
   return (
     <MainScreen typeOfScreen="tab">
       {/**Header */}
@@ -267,6 +353,7 @@ export default function SearchScreen() {
           data={categories}
           renderItem={UnitCategorie}
           horizontal={true}
+          extraData={categories}
         />
       </Box>
 
@@ -293,7 +380,7 @@ export default function SearchScreen() {
           ListEmptyComponent={
             <Box alignItems={"center"} justifyContent="center">
               <Text variant="bigTitle" color={"primary"} fontWeight="bold">
-                Il n'y a pas de résultat pour "{valueForSearch}"
+                Pas de résultats
               </Text>
             </Box>
           }
