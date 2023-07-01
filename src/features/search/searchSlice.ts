@@ -30,10 +30,11 @@ const initialState: SearchState = {
   products: [
     {
       id: 1,
-      nom: "Mug",
-      description: "Mug jolie",
+      nom: "Mug noire",
+      description:
+        "Le mug noir, abordant fièrement la marque d'Agrad, ajoute une touche de style à votre moment de dégustation de boissons chaudes.",
       image: require("_images/mug.jpg"),
-      prix: 2000.0,
+      prix: 20000.0,
       categorie: 1,
       user: 2,
       number: 12,
@@ -41,11 +42,11 @@ const initialState: SearchState = {
     },
     {
       id: 2,
-      nom: "Pull",
+      nom: "Mug cristal",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis modi ducimus dolore excepturi, quo distinctio tempora pariatur nulla ipsam in, beatae incidunt accusantium! Culpa, quaerat at! Voluptatem labore enim repellendus!",
-      image: require("_images/pull.jpg"),
-      prix: 2000.0,
+        "Le mug cristal, orné du logo de Mahaleo, incarne l'élégance et le charme. Savourez vos boissons chaudes préférées avec ce mug.",
+      image: require("_images/cup.jpg"),
+      prix: 15000.0,
       categorie: 2,
       user: 1,
       number: 12,
@@ -53,10 +54,11 @@ const initialState: SearchState = {
     },
     {
       id: 3,
-      nom: "Pull black",
-      description: "Mug jolie",
-      image: require("_images/pull_black.jpg"),
-      prix: 400.0,
+      nom: "Casque",
+      description:
+        "Le casque audio est un compagnon de musique idéal pour profiter de vos morceaux préférés avec une qualité sonore exceptionnelle.",
+      image: require("_images/casque_jaune.jpg"),
+      prix: 80000.0,
       categorie: 1,
       user: 1,
       number: 12,
@@ -64,10 +66,35 @@ const initialState: SearchState = {
     },
     {
       id: 4,
-      nom: "Mug spiderman",
-      description: "Pull jolie",
-      image: require("_images/pull.jpg"),
-      prix: 2000.0,
+      nom: "Nike rose",
+      description:
+        "Les chaussures Nike roses avec la marque d' Antso Bommartin ajoutent une touche de style et de féminité à votre tenue sportive.",
+      image: require("_images/nike_rose.jpg"),
+      prix: 40000.0,
+      categorie: 2,
+      user: 2,
+      number: 12,
+      is_finished: false,
+    },
+    {
+      id: 5,
+      nom: "Nike standard",
+      description:
+        "Les chaussures Nike standard sont un choix polyvalent et intemporel, en plus avec la marque de Bob Tobias le dur vous ne regretterez pas.",
+      image: require("_images/nike.jpg"),
+      prix: 40000.0,
+      categorie: 2,
+      user: 2,
+      number: 12,
+      is_finished: false,
+    },
+    {
+      id: 6,
+      nom: "Pull Noir",
+      description:
+        "Notre Pull Noir, créé avec en collaboration de Mr Sayda, est à la fois tendance et original.",
+      image: require("_images/pull_black.jpg"),
+      prix: 50000.0,
       categorie: 2,
       user: 2,
       number: 12,

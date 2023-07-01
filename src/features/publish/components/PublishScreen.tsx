@@ -231,7 +231,7 @@ export default function PublishScreen() {
                       onPress={() => navigation.navigate("achat_screen")}
                     >
                       <Image
-                        source={require("_images/mug.jpg")}
+                        source={require("_images/paypal.png")}
                         style={styles.image_payment}
                       />
                     </TouchableOpacity>
@@ -250,12 +250,10 @@ export default function PublishScreen() {
                       },
                     ]}
                   >
-                    <TouchableOpacity>
-                      <Image
-                        source={require("_images/mug.jpg")}
-                        style={styles.image_payment}
-                      />
-                    </TouchableOpacity>
+                    <Image
+                      source={require("_images/paypal.png")}
+                      style={styles.image_payment}
+                    />
                   </Box>
                 </Row>
               )}
